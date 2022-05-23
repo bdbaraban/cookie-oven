@@ -1,6 +1,6 @@
 {
   "name": "cookie-oven",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Brennan D Baraban <brennan@bdov.dev> (https://bdov.dev)",
   "description": "Encrypted cookie-based sessions",
   "license": "MIT",
