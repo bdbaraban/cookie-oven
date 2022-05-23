@@ -1,93 +1,76 @@
 # :cookie: cookie-oven
 
-Express middleware to read, write, and refresh one or many authenticated sessions in a sha256-encrypted cookie.
+[Express](https://expressjs.com/) middleware to read, write, and refresh one or many authenticated sessions in a sha256-encrypted cookie.
 
 ## Usage
 
-### One session:
+One session:
 ```typescript
 import cookieOven from 'cookie-oven';
 
-// Instantiate Express app
 const app = express();
 
-// Load cookie-oven middleware
-app.use([
+app.use(
   cookieOven({
     name: 'session',
     secret: 'secret',
-    maxAge: 600000, // 10 minutes
-  }),
-]);
-
-// Read session in request
-app.get(
-  '/route',
-  (request, response) => {
-    const sessionId = request.session.id;
-    const status = !sessionId ? 401 : 200;
-    return response.status(status).end();
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
   })
 );
+
+app.get('/', (request, response) => {
+  const sessionId = request.session.id;
+  const status = !sessionId ? 401 : 200;
+  return response.status(status).end();
+});
 ```
 
-### Multiple sessions:
+Multiple sessions:
 ```typescript
 import cookieOven from 'cookie-oven';
 
-// Instantiate Express app
 const app = express();
 
-// Load cookie-oven middleware
 app.use([
   cookieOven({
     name: 'userSession',
     secret: 'user-secret',
-    maxAge: 60000, // 10 minutes
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
   }),
 
   cookieOven({
     name: 'adminSession',
     secret: 'admin-secret',
-    maxAge: 60000 * 2, // 20 minutes
+    maxAge: 48 * 60 * 60 * 1000 // 48 hours
   }),
 ]);
 
-// Read user session in request
-app.get(
-  '/user',
-  (request, response) => {
-    const userSessionId = request.userSession.id;
-    const status = !userSessionId ? 401 : 200;
-    return response.status(status).end();
-  })
-);
+app.get('/user', (request, response) => {
+  const userSessionId = request.userSession.id;
+  const status = !userSessionId ? 401 : 200;
+  return response.status(status).end();
+});
 
-// Read admin session in request
-app.get(
-  '/admin',
-  (request, response) => {
-    const adminSessionId = request.adminSession.id;
-    const status = !adminSessionId ? 401 : 200;
-    return response.status(status).end();
-  })
-);
+app.get('/admin', (request, response) => {
+  const adminSessionId = request.adminSession.id;
+  const status = !adminSessionId ? 401 : 200;
+  return response.status(status).end();
+});
 ```
 
-### Options:
+### Options
 ```typescript
 interface OvenSettings {
-  // Session values
-  name: string;
-  secret: string;
+  name: string; // name of the cookie to set
+  secret: string; // key used to sign and verify cookie values
+  isRolling?: boolean; // if true, the session will be refreshed on every request (default `false`)
 
-  // Cookie settings
+  // Cookie options, same as github.com/pillarjs/cookies
   maxAge: number;
   httpOnly?: boolean;
   sameSite?: 'strict' | 'lax';
   domain?: string;
   secure?: boolean;
   overwrite?: boolean;
-  isRolling?: boolean;
 }
 ```

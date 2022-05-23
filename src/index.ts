@@ -15,10 +15,10 @@ import type { DecryptedCookie, OvenSettings } from './types';
  *
  * @returns - Middleware to manage the encrypted cookie.
  */
-export default (options: OvenSettings): RequestHandler => {
+const cookieOven = (options: OvenSettings): RequestHandler => {
   const settings: OvenSettings = { ...DEFAULT_SETTINGS, ...options };
 
-  return function cookieOven(request, response, next) {
+  return function middleware(request, response, next) {
     const cookies = new Cookies(request, response);
     const cookie = cookies.get(settings.name);
 
@@ -68,3 +68,5 @@ export default (options: OvenSettings): RequestHandler => {
     next();
   };
 };
+
+export default cookieOven;

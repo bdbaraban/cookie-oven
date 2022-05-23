@@ -1,3 +1,3 @@
-import middleware from './src/middleware';
+import cookieOven from './src';
 
-export default middleware;
+export default cookieOven;
