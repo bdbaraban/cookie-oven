@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "lib": ["ESNext", "DOM"],
+    "target": "ES6",
+    "module": "CommonJS",
+    "outDir": "dist",
+    "removeComments": true,
+    "baseUrl": "./",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "alwaysStrict": true,
+    "allowUnreachableCode": false,
+    "strictNullChecks": true,
+    "noImplicitReturns": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+}

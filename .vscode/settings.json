@@ -1,0 +1,10 @@
+{
+  "search.exclude": {
+    "**/node_modules": true
+  },
+  "editor.formatOnSave": true,
+  "prettier.configPath": ".prettierrc",
+  "prettier.enable": true,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
+}
